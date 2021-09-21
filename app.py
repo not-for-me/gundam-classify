@@ -1,13 +1,19 @@
 from fastai.vision.widgets import *
 from fastai.vision.all import *
 
+import urllib.request
+
 from pathlib import Path
 
 import streamlit as st
 
 class Predict:
     def __init__(self, filename):
-        self.learn_inference = load_learner(Path()/filename)
+
+        model_url = "https://www.dropbox.com/s/9b7dvwnkatdla0u/model.pkl?dl=1"
+        urllib.request.urlretrieve(model_url, "model.pkl")
+
+        self.learn_inference = load_learner(Path("."), "model.pkl")
         self.img = self.get_image_from_upload()
         if self.img is not None:
             self.display_output()
@@ -32,7 +38,4 @@ class Predict:
             st.write(f'Click the button to classify') 
 
 if __name__=='__main__':
-
-    file_name='model.pkl'
-
-    predictor = Predict(file_name)
+    predictor = Predict()
