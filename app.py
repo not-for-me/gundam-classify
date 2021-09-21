@@ -8,12 +8,12 @@ from pathlib import Path
 import streamlit as st
 
 class Predict:
-    def __init__(self, filename):
+    def __init__(self):
 
         model_url = "https://www.dropbox.com/s/9b7dvwnkatdla0u/model.pkl?dl=1"
         urllib.request.urlretrieve(model_url, "model.pkl")
 
-        self.learn_inference = load_learner(Path("."), "model.pkl")
+        self.learn_inference = load_learner("model.pkl")
         self.img = self.get_image_from_upload()
         if self.img is not None:
             self.display_output()
